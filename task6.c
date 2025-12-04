@@ -13,11 +13,6 @@ struct dir_stats {
     int    file_count;
 };
 
-/* base_dir  – путь к базовому каталогу (аргумент 1)
- * sub_name  – имя подкаталога относительно base_dir
- *            для текущего каталога используем "."
- * label     – как выводить это имя в отчёте (".", "audio", и т.п.)
- */
 int process_subdir(const char *base_dir,
                    const char *sub_name,
                    const char *label,
@@ -114,11 +109,9 @@ int main(int argc, char *argv[])
 
     fprintf(out, "subdir\tfiles\tbytes\tlargest_file\n");
     printf("subdir\tfiles\tbytes\tlargest_file\n");
-
-    /* 1. сначала обрабатываем сам base_dir как текущий каталог */
+    
     process_subdir(base_dir, ".", base_dir, out);
 
-    /* 2. затем все его подкаталоги, как раньше */
     while ((entry = readdir(dir)) != NULL) {
         if (strcmp(entry->d_name, ".") == 0 ||
             strcmp(entry->d_name, "..") == 0) {
