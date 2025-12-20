@@ -76,7 +76,7 @@ static long long copy_file_bytes(const char *src, const char *dst, mode_t mode)
 static void reap_one(int *running)
 {
     int status = 0;
-    pid_t p = waitpid(-1, &status, 0); // -1 = wait for any child [web:81]
+    pid_t p = waitpid(-1, &status, 0);
     if (p > 0)
         (*running)--;
 }
@@ -144,6 +144,7 @@ static int manager_work(const char *dir1, const char *dir2, int N)
         }
         else
         {
+            printf("running: %d\n", running);
             running++;
         }
     }
@@ -153,6 +154,7 @@ static int manager_work(const char *dir1, const char *dir2, int N)
     while (running > 0)
     {
         reap_one(&running);
+        printf("running: %d\n", running);
     }
 
     return 0;
